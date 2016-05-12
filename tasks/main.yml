@@ -1,0 +1,32 @@
+---
+# tasks file for bbirkinbine.centos7common
+
+- name: "yum install packages"
+  yum: name="{{ item }}" state=present
+  with_items:
+    - ntp
+    - acpid
+    - git
+    - wget
+    - unzip
+
+- name: "yum update"
+  yum: name=* state=latest
+
+- name: "set timzone UTC"
+  command: /usr/bin/timedatectl set-timezone UTC
+
+- name: "enable services"
+  service: name="{{ item }}" state=running enabled=yes
+  with_items:
+    - ntpd
+    - acpid
+
+- name: "enable services"
+  service: name="{{ item }}" state=running enabled=yes
+  with_items:
+    - ntpd
+    - acpid
+
+- name: "timedatectl use ntp"
+  command: /usr/bin/timedatectl set-ntp true
